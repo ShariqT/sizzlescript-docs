@@ -1,0 +1,11 @@
+{
+  "$schema": "https://cdn.zuplo.com/schemas/dev-portal.json",
+  "enabled": true,
+  "enableAuthentication": false,
+  "requireAuthentication": false,
+  "generateExamples": true,
+  "enableMonetization": false,
+  "pageTitle": "SizzleScript Documentation",
+  "sitePathname": "",
+  "faviconUrl": ""
+}

@@ -1,0 +1,13 @@
+{
+  "docs": [
+    {
+      "type": "doc",
+      "id": "index",
+      "label": "SizzleScript spec"
+    },
+    {
+      "type": "api-ref",
+      "label": "API Reference"
+    }
+  ]
+}

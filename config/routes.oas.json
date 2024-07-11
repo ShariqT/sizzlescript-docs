@@ -1,0 +1,168 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "SizzleScript"
+  },
+  "paths": {
+    "/script": {
+      "x-zuplo-path": {
+        "pathMode": "open-api"
+      },
+      "post": {
+        "summary": "Script",
+        "description": "This endpoint is the starting point to creating your AI generated videos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "script": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "A file path to a properly formatted sizzlescript"
+                  }
+                },
+                "required": [
+                  "script"
+                ]
+              }
+            }
+          }
+        },
+        "x-zuplo-route": {
+          "corsPolicy": "none",
+          "handler": {
+            "export": "urlRewriteHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "rewritePattern": "https://madstory-server-production.up.railway.app/api/script"
+            }
+          },
+          "policies": {
+            "inbound": [
+              "api-key-inbound",
+              "monetization-inbound",
+              "rate-limit-inbound"
+            ]
+          }
+        },
+        "operationId": "3874b578-dd2d-4a1f-ad06-0fe8edfe5b0c",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Represents the job ID for the rendering process. You will use this ID value to download and get the current status of the rendering process."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "These is status of the current job."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-internal": false
+      }
+    },
+    "/movie/{storyId}": {
+      "x-zuplo-path": {
+        "pathMode": "url-pattern"
+      },
+      "get": {
+        "summary": "Download Movie",
+        "description": "Download finished movies using this endpoint. **Please note that videos older than a week will be deleted.**",
+        "x-zuplo-route": {
+          "corsPolicy": "none",
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://madstory-server-production.up.railway.app"
+            }
+          },
+          "policies": {
+            "inbound": []
+          }
+        },
+        "operationId": "15bf3fa3-e15a-44ac-9c3e-3bdddf37c999"
+      }
+    },
+    "/status/{storyId}": {
+      "x-zuplo-path": {
+        "pathMode": "url-pattern"
+      },
+      "get": {
+        "summary": "Status",
+        "description": "This endpoint returns the current status of a video processing job.",
+        "x-zuplo-route": {
+          "corsPolicy": "none",
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://madstory-server-production.up.railway.app/api"
+            }
+          },
+          "policies": {
+            "inbound": []
+          }
+        },
+        "operationId": "c509ef89-bfee-45ff-9e48-d71b0504b34a",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "link": {
+                      "type": "string",
+                      "description": "The url where you can download the finished movie"
+                    },
+                    "ref_id": {
+                      "type": "string",
+                      "description": "Represents the job ID for the rendering process. You will use this ID value to download and get the current status of the rendering process."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "These is status of the current job."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Job ID is not found in system",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-internal": false
+      }
+    }
+  }
+}
