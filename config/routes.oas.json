@@ -44,7 +44,6 @@
           "policies": {
             "inbound": [
               "api-key-inbound",
-              "monetization-inbound",
               "rate-limit-inbound"
             ]
           }
